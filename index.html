@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚖️ הרזיה</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Heebo', sans-serif;
+        }
+        
+        body {
+            background: #FFF5F7;
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+            padding-bottom: 200px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            color: #D4A574;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #888;
+            font-size: 1.1em;
+        }
+        
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .main-icon {
+            font-size: 80px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .weight-setup {
+            background: #fff;
+            border: 2px solid #B8E6D4;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+        
+        .setup-title {
+            text-align: center;
+            color: #D4A574;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .input-group {
+            text-align: center;
+        }
+        
+        .input-group label {
+            display: block;
+            color: #666;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #FFE4EC;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #B8E6D4;
+        }
+        
+        .save-btn {
+            width: 100%;
+            background: #B8E6D4;
+            border: none;
+            color: #333;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .progress-display {
+            background: #fff;
+            border: 2px solid #D4A574;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            text-align: center;
+        }
+        
+        .current-weight {
+            font-size: 3em;
+            font-weight: 900;
+            color: #D4A574;
+            margin-bottom: 10px;
+        }
+        
+        .weight-label {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar-container {
+            background: #FFE4EC;
+            border-radius: 15px;
+            height: 30px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: #B8E6D4;
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .stat-value.lost {
+            color: #81C784;
+        }
+        
+        .stat-value.remaining {
+            color: #FFB6C1;
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #888;
+        }
+        
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        
+        .power-button {
+            background: #fff;
+            border: 2px solid #FFB6C1;
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .power-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(255, 182, 193, 0.3);
+            background: #FFF0F3;
+        }
+        
+        .power-button:active {
+            transform: scale(0.98);
+        }
+        
+        .power-button.hourglass {
+            border-color: #D4A574;
+        }
+        
+        .power-button.hourglass:hover {
+            box-shadow: 0 5px 20px rgba(212, 165, 116, 0.3);
+            background: #FFFAF5;
+        }
+        
+        .power-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .button-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .button-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .button-desc {
+            font-size: 0.9em;
+            color: #888;
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #FFF5F7;
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .overlay.active {
+            display: flex;
+        }
+        
+        .overlay-content {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .close-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #FFB6C1;
+            border: none;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .animation-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+        }
+        
+        .animation-text {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            min-height: 60px;
+            color: #333;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #FFE4EC;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            background: #FFB6C1;
+        }
+        
+        .completion-message {
+            display: none;
+            padding: 20px;
+            background: #fff;
+            border: 2px solid #B8E6D4;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .completion-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .install-btn {
+            background: #FFB6C1;
+            border: none;
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .install-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 182, 193, 0.5);
+        }
+        
+        .install-btn:disabled {
+            background: #ddd;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .reset-btn {
+            background: #FFE4EC;
+            border: 2px solid #FFB6C1;
+            color: #666;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+        
+        .success-message {
+            display: none;
+            background: #fff;
+            border: 2px solid #D4A574;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        
+        .success-title {
+            font-size: 1.5em;
+            color: #D4A574;
+            margin-bottom: 10px;
+        }
+        
+        .success-text {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚖️ הרזיה</h1>
+        <p>כל לחיצה מורידה חצי קילו</p>
+    </div>
+    
+    <div class="icon-container">
+        <span class="main-icon">⚖️</span>
+    </div>
+    
+    <div class="weight-setup">
+        <div class="setup-title">⚙️ הגדרת משקל</div>
+        <div class="input-row">
+            <div class="input-group">
+                <label>משקל נוכחי (ק"ג)</label>
+                <input type="number" id="currentWeightInput" placeholder="70" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>משקל יעד (ק"ג)</label>
+                <input type="number" id="targetWeightInput" placeholder="60" step="0.1">
+            </div>
+        </div>
+        <button class="save-btn" onclick="saveWeights()">💾 שמור והתחל</button>
+    </div>
+    
+    <div class="progress-display" id="progressDisplay" style="display: none;">
+        <div class="current-weight" id="displayWeight">0</div>
+        <div class="weight-label">המשקל הנוכחי שלי (ק"ג)</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="weightProgressBar">0%</div>
+        </div>
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-value" id="startWeight">0</div>
+                <div class="stat-label">משקל התחלה</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value lost" id="lostWeight">0</div>
+                <div class="stat-label">ירדתי</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value remaining" id="remainingWeight">0</div>
+                <div class="stat-label">נשאר</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="targetWeight">0</div>
+                <div class="stat-label">משקל יעד</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="buttons-container">
+        <div class="power-button" id="loseWeightBtn" onclick="startProcess('weight')">
+            <span class="button-icon">🔥</span>
+            <div class="button-title">הורד חצי קילו</div>
+            <div class="button-desc">לחצי להסרת משקל עודף</div>
+        </div>
+        
+        <div class="power-button hourglass" id="hourglassBtn" onclick="startProcess('hourglass')">
+            <span class="button-icon">⏳</span>
+            <div class="button-title">עיצוב גוף שעון חול</div>
+            <div class="button-desc">מותניים צרות, ישבן מעוצב, רגליים רזות</div>
+        </div>
+    </div>
+    
+    <div class="success-message" id="successMessage">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">כל הכבוד! הגעת למשקל היעד!</div>
+        <div class="success-text">
+            את מדהימה! הצלחת להגיע למשקל שרצית.<br>
+            את מלכה! 👑
+        </div>
+    </div>
+    
+    <div style="text-align: center;">
+        <button class="reset-btn" onclick="resetAll()">🔄 איפוס הכל</button>
+    </div>
+    
+    <!-- Weight Loss Overlay -->
+    <div class="overlay" id="weightOverlay">
+        <button class="close-overlay" onclick="closeOverlay('weight')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="weightIcon">🔥</div>
+            <div class="animation-text" id="weightText">מתחילה להוריד משקל...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="weightProgress"></div>
+            </div>
+            <button class="install-btn" id="weightBtn" onclick="runWeightProcess()">🔥 הורד חצי קילו</button>
+            <div class="completion-message" id="weightComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">ירדת חצי קילו בהצלחה!</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hourglass Body Overlay -->
+    <div class="overlay" id="hourglassOverlay">
+        <button class="close-overlay" onclick="closeOverlay('hourglass')">✕</button>
+        <div class="overlay-content">
+            <div class="animation-icon" id="hourglassIcon">⏳</div>
+            <div class="animation-text" id="hourglassText">מתחילה עיצוב גוף שעון חול...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="hourglassProgress" style="background: #D4A574;"></div>
+            </div>
+            <button class="install-btn" id="hourglassBtn2" onclick="runHourglassProcess()" style="background: #D4A574;">⏳ התחל עיצוב</button>
+            <div class="completion-message" id="hourglassComplete">
+                <p style="font-size: 1.3em; margin-bottom: 10px; color: #D4A574;">✅ כל הכבוד!</p>
+                <p style="color: #666;">הגוף שלך עוצב לצורת שעון חול!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global reset function - must be at start of script
+        window.resetAll = function() {
+            if (confirm('לאפס את כל נתוני המשקל?')) {
+                localStorage.removeItem('weightLossData');
+                location.reload();
+            }
+        };
+        
+        let weightData = {
+            startWeight: 0,
+            currentWeight: 0,
+            targetWeight: 0,
+            totalLost: 0
+        };
+        
+        function loadData() {
+            const saved = localStorage.getItem('weightLossData');
+            if (saved) {
+                weightData = JSON.parse(saved);
+                if (weightData.startWeight > 0) {
+                    document.getElementById('progressDisplay').style.display = 'block';
+                    updateDisplay();
+                }
+            }
+        }
+        
+        function saveData() {
+            localStorage.setItem('weightLossData', JSON.stringify(weightData));
+        }
+        
+        function saveWeights() {
+            const current = parseFloat(document.getElementById('currentWeightInput').value);
+            const target = parseFloat(document.getElementById('targetWeightInput').value);
+            
+            if (!current || !target) {
+                alert('הכניסי משקל נוכחי ומשקל יעד');
+                return;
+            }
+            
+            if (target >= current) {
+                alert('משקל היעד צריך להיות נמוך מהמשקל הנוכחי');
+                return;
+            }
+            
+            weightData.startWeight = current;
+            weightData.currentWeight = current;
+            weightData.targetWeight = target;
+            weightData.totalLost = 0;
+            
+            saveData();
+            document.getElementById('progressDisplay').style.display = 'block';
+            document.getElementById('successMessage').classList.remove('show');
+            updateDisplay();
+            
+            alert('✅ המשקלים נשמרו! עכשיו לחצי על הכפתור להורדת משקל');
+        }
+        
+        function updateDisplay() {
+            document.getElementById('displayWeight').textContent = weightData.currentWeight.toFixed(1);
+            document.getElementById('startWeight').textContent = weightData.startWeight.toFixed(1);
+            document.getElementById('targetWeight').textContent = weightData.targetWeight.toFixed(1);
+            document.getElementById('lostWeight').textContent = weightData.totalLost.toFixed(1);
+            
+            const remaining = weightData.currentWeight - weightData.targetWeight;
+            document.getElementById('remainingWeight').textContent = remaining > 0 ? remaining.toFixed(1) : '0';
+            
+            const totalToLose = weightData.startWeight - weightData.targetWeight;
+            const progressPercent = totalToLose > 0 ? Math.min((weightData.totalLost / totalToLose) * 100, 100) : 0;
+            
+            const progressBar = document.getElementById('weightProgressBar');
+            progressBar.style.width = progressPercent + '%';
+            progressBar.textContent = Math.round(progressPercent) + '%';
+            
+            // Check if reached goal
+            if (weightData.currentWeight <= weightData.targetWeight) {
+                document.getElementById('successMessage').classList.add('show');
+                document.getElementById('loseWeightBtn').classList.add('disabled');
+            }
+        }
+        
+        function startProcess(type) {
+            if (type === 'weight') {
+                if (weightData.startWeight === 0) {
+                    alert('קודם הכניסי את המשקל הנוכחי ומשקל היעד');
+                    return;
+                }
+                
+                if (weightData.currentWeight <= weightData.targetWeight) {
+                    alert('הגעת למשקל היעד! 🎉');
+                    return;
+                }
+            }
+            
+            document.getElementById(type + 'Overlay').classList.add('active');
+            document.getElementById(type + 'Progress').style.width = '0%';
+            document.getElementById(type + 'Complete').classList.remove('show');
+            
+            if (type === 'weight') {
+                document.getElementById(type + 'Btn').disabled = false;
+                document.getElementById(type + 'Btn').textContent = '🔥 הורד חצי קילו';
+            } else if (type === 'hourglass') {
+                document.getElementById('hourglassBtn2').disabled = false;
+                document.getElementById('hourglassBtn2').textContent = '⏳ התחל עיצוב';
+            }
+        }
+        
+        function closeOverlay(type) {
+            document.getElementById(type + 'Overlay').classList.remove('active');
+        }
+        
+        function runWeightProcess() {
+            const btn = document.getElementById('weightBtn');
+            const progress = document.getElementById('weightProgress');
+            const text = document.getElementById('weightText');
+            const icon = document.getElementById('weightIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '🔥 מפעילה את חילוף החומרים...', icon: '🔥' },
+                { percent: 20, text: '💪 שורפת שומן...', icon: '💪' },
+                { percent: 30, text: '🏃‍♀️ מאיצה את הגוף...', icon: '🏃‍♀️' },
+                { percent: 40, text: '💨 משחררת רעלים...', icon: '💨' },
+                { percent: 50, text: '⚡ מגבירה אנרגיה...', icon: '⚡' },
+                { percent: 60, text: '🌊 מאזנת נוזלים...', icon: '🌊' },
+                { percent: 70, text: '✨ מחטבת את הגוף...', icon: '✨' },
+                { percent: 80, text: '🎯 מתמקדת בשומן עודף...', icon: '🎯' },
+                { percent: 90, text: '🦋 משחררת חצי קילו...', icon: '🦋' },
+                { percent: 100, text: '✅ ירדת חצי קילו!', icon: '⚖️' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('weightComplete').classList.add('show');
+                    
+                    // Update weight
+                    weightData.currentWeight -= 0.5;
+                    weightData.totalLost += 0.5;
+                    saveData();
+                    updateDisplay();
+                    
+                    btn.disabled = false;
+                    btn.textContent = '🔥 הורד חצי קילו';
+                }
+            }, 4000);
+        }
+        
+        function runHourglassProcess() {
+            const btn = document.getElementById('hourglassBtn2');
+            const progress = document.getElementById('hourglassProgress');
+            const text = document.getElementById('hourglassText');
+            const icon = document.getElementById('hourglassIcon');
+            btn.disabled = true;
+            btn.textContent = '⏳ בתהליך...';
+            
+            const stages = [
+                { percent: 10, text: '🔍 סורקת את מבנה הגוף...', icon: '🔍' },
+                { percent: 20, text: '⏳ מעצבת מותניים צרות...', icon: '⏳' },
+                { percent: 30, text: '🍑 מעצבת ישבן מעוגל...', icon: '🍑' },
+                { percent: 40, text: '🦵 מחטבת רגליים רזות...', icon: '🦵' },
+                { percent: 50, text: '👩 מחטבת פנים רזות...', icon: '👩' },
+                { percent: 60, text: '✨ יוצרת מבנה גוף בצורת שעון חול...', icon: '✨' },
+                { percent: 70, text: '💪 מחטבת זרועות...', icon: '💪' },
+                { percent: 80, text: '🌟 משפרת יציבה...', icon: '🌟' },
+                { percent: 90, text: '💜 מטמיעה את העיצוב...', icon: '💜' },
+                { percent: 100, text: '✅ גוף שעון חול מושלם!', icon: '⏳' }
+            ];
+            
+            let stage = 0;
+            const interval = setInterval(() => {
+                if (stage < stages.length) {
+                    progress.style.width = stages[stage].percent + '%';
+                    text.textContent = stages[stage].text;
+                    icon.textContent = stages[stage].icon;
+                    stage++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('hourglassComplete').classList.add('show');
+                    btn.disabled = false;
+                    btn.textContent = '⏳ התחל עיצוב';
+                }
+            }, 4000);
+        }
+        
+        loadData();
+    </script>
+</body>
+</html>
